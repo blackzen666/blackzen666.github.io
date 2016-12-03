@@ -1,15 +1,81 @@
 <!DOCTYPE html>
-<!--html>
+<html>
   <head>
     <meta charset="utf-8">
-    <title>360 image viewer</title>
-    <meta name="description" content="360 image viewer using — A-Frame">
-    <script src="A_frame/aframe.min.js"></script>
+    <title>transicion</title>
+    <meta name="description" content="move camera from A to B — A-Frame">
+    <script src="aframe.min.js"></script>
+    <script src="set-image.js"></script>
+
+    <script src="https://npmcdn.com/aframe-animation-component@3.0.1"></script>
+    <script src="https://npmcdn.com/aframe-event-set-component@3.0.1"></script>
+    <script src="https://npmcdn.com/aframe-layout-component@3.0.1"></script>
+    <script src="https://npmcdn.com/aframe-template-component@3.0.1"></script>
+
   </head>
   <body>
     <a-scene>
-      <a-sky src="A_frame/01.jpg" rotation="0 -130 0"></a-sky>
-      <a-sky src="A_frame/02.jpg" rotation="0 -130 0"></a-sky>
+      <a-assets>
+        <img id="my-texture1" src="01.jpg">
+        <img id="my-texture2" src="02.jpg">
+
+        <!-- Image link template to be reused. -->
+        <script id="link" type="text/nunjucks">
+          <a-sphere class="link"   radius="1.5" color="#fff" material="src: #my-texture1"
+            event-set__1="_event: mousedown; scale: 1 1 1"
+            event-set__2="_event: mouseup; scale: 1.2 1.2 1.2"
+            event-set__3="_event: mouseenter; scale: 1.2 1.2 1.2"
+            event-set__4="_event: mouseleave; scale: 1 1 1"
+            set-image="on: click; target: #sky; src: {{ src }}; dur: 3000">
+                <a-animation begin = "click" attribute="material.color" from="white" to="black" dur="3000"></a-animation>
+                <a-animation attribute="material.opacity" begin="fade" to="0" dur="3000"></a-animation>
+            </a-sphere>
+        </script>
+
+      </a-assets>
+
+      <a-sky id = "sky" src="#my-texture2" rotation="0 0 0" ></a-sky>
+
+       <a-entity id="links" position="2.5 0 20" rotation="0 180 0">
+        <a-entity template="src: #link" data-src="#my-texture1"></a-entity>
+      </a-entity>
+     
+      <!-- Camera + cursor.-->
+      <a-entity camera look-controls id  ="camera">
+        <a-cursor id="cursor" 
+
+          event-set__1="_event: mouseenter; color: springgreen"
+          event-set__2="_event: mouseleave; color: black"
+          animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150"
+          animation__fusing="property: fusing; startEvents: fusing; from: 1 1 1; to: 0.1 0.1 0.1; dur: 1500"
+        >
+          
+        </a-cursor>
+    
+        <a-animation attribute="position" look-at="#camera"  begin="click" from="0 0 0" to="2.5 0 20"  dur="5000">
+
+        </a-animation>
+
+      </a-entity>
+
+
+
     </a-scene>
+    <script>
+      setTimeout(cambio, 3000);
+
+      function  cambio(){
+        //alert("Hello");
+        //document.getElementById("sky").setAttribute("src","01.jpg");
+        
+      }
+
+
+    </script>
   </body>
-</html-->
+
+
+
+<script>
+</script>
+</html>
