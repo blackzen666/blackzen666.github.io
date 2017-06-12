@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src= "jquery-3.2.1.min.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+	function myFunction() {
+		// body...
+		var msg= document.getElementById("field").value;
+		console.log(msg);
+		var div = document.getElementById("div");
+		var temp = document.createElement("div");
+	
+		temp.innerHTML += "ME: ";
+		temp.innerHTML += msg;
+		temp.style.color = "blue";
+		div.appendChild(temp);
+		//div.innerHTML += "<br>";
+	    div.innerHTML += "</div>"
+	    
+		$.ajax({
+		  url: 'https://api.wit.ai/message',
+		  data: {
+		    'q': msg,
+		    'access_token' : 'BRF5L5M5RWYPGYRMAHFG77OLUVZCI3UF'
+		  },
+		  dataType: 'jsonp',
+		  method: 'GET',
+		  success: function(response) {
+		      console.log("success!", response);
+		      var bot_temp =  document.createElement("div");
+		      bot_temp.innerHTML = "Bot: "
+		      bot_temp.innerHTML += ""+response+"";
+		      bot_temp.style.color = "red";
+		      div.appendChild(bot_temp);
+		  }
+	});
+
+	document.getElementById("field").value = "";
+
+	}
+
+
+
+
+</script>
+
+
+
+<div style = "width: 50%; height: 50%;" id = "div">
+	
+</div>
+
+<input id= "field">
+<button onclick="myFunction()">send</button>
+
+</body>
+</html>
