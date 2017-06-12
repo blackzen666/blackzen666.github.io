@@ -14,8 +14,7 @@
     -->
     <title>Chat box - Bootdey.com</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script-->
-    <script type="text/javascript" src= "https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
     <style type="text/css">
     	                    
@@ -272,16 +271,63 @@ function bot_response(response){
                 switch(response.entities.intent[i].value) {
                     case "Hola":
                         console.log("Hola!");
-                        var mensaje = "Hola, soy el robot para preguntas frequentes(FAQ) de aguas y aguas en que te puedo ayudar.";
-                        msg_format("Bot A&A",mensaje,'logo.jpg');
+
+                        var mensaje = "Hola, soy Andres, del servicio de preguntas frecuentes de aguas y aguas, ¿en que le puedo asistir el día de hoy? ";
+                        msg_format("FPs",mensaje,'logo.jpg');
                         break;
                     case "solicitud de la matricula":
-                        var mensaje = "Presentar los siguientes documentos:<br>-Autorización del propietario para la instalación del servicio.<br>-Diligenciar el siguiente formato.<br>-Copia de la escritura o certificado de tradición con fecha de expedición máximo 30 días, documento declaración de posesión, factura de predial del año en curso o compraventa, donde se identifique el número de ficha catastral.<br>-Copia documento de identidad del solicitante.<br>-Certificado de estratificación expedido por planeación municipal piso 6 palacio municipal de Pereira o lo puede conseguir a través de la página www.pereiradigital.gov.co.<br>-Solo aplica para clase de uso residencial.<br>-Certificado de nomenclatura expedido por Planeación Municipal piso 6 palacio municipal de Pereira.<br>-Copia licencia de construcción Se debe tener disponibilidad de colilla o acometida interna.";
-                        msg_format("Bot A&A",mensaje,'logo.jpg')
+                        var mensaje1 = "Presentar los siguientes documentos:<br>-Autorización del propietario para la instalación del servicio.<br>"
+                        var mensaje2 = "-Diligenciar el siguiente formato.<br>-Copia de la escritura o certificado de tradición con fecha de expedición máximo 30 días, documento declaración de posesión, factura de predial del año en curso o compraventa, donde se identifique el número de ficha catastral.<br>";
+                        var mensaje3 ="-Copia documento de identidad del solicitante.<br>-Certificado de estratificación expedido por planeación municipal piso 6 palacio municipal de Pereira o lo puede conseguir a través de la página www.pereiradigital.gov.co.<br>";
+
+                        var mensaje4 ="Solo aplica para clase de uso residencial.<br>"
+                        var mensaje5 ="-Certificado de nomenclatura expedido por Planeación Municipal piso 6 palacio municipal de Pereira.<br>-Copia licencia de construcción Se debe tener disponibilidad de colilla o acometida interna.";
+
+
+                        msg_format("Bot A&A",mensaje1,'logo.jpg');
+                        //setInterval(function(){}, 1000);
+                        msg_format("Bot A&A",mensaje2,'logo.jpg');
+                        //setInterval(function(){}, 1000);
+                        msg_format("Bot A&A",mensaje3,'logo.jpg');
+                        //setInterval(function(){}, 1000);
+                        msg_format("Bot A&A",mensaje4,'logo.jpg');
+                        //setInterval(function(){}, 1000);
+                        msg_format("Bot A&A",mensaje5,'logo.jpg');
+                        //setInterval(function(){}, 1000);
+                        
+                        var msgs = []
+                        msgs.push(mensaje1);
+                        msgs.push(mensaje2);
+                        msgs.push(mensaje3);
+                        msgs.push(mensaje4);
+                        msgs.push(mensaje5);
+                        msgs.push(mensaje6);
+
+                        send_mgs_fragments(msgs);
+
+                        
+
                         break;
-                    case "independizacion del servicio":
-                        var mensaje = "Hola, soy el robot para preguntas frequentes(FAQ) de aguas y aguas en que te puedo ayudar.";
-                        msg_format("Bot A&A",mensaje,'logo.jpg')
+                    case "independización del servicio":
+                        var mensaje1 = "Presentar los siguientes documentos:<br>";
+                        var mensaje2 = "-Autorización del propietario para la instalación del servicio.<br>";
+                        var mensaje3 ="Escritura o certificado de tradición con fecha de expedición máximo 15 días, documento declaración de posesión, factura de predial del año en curso o compraventa, donde se identifique el número de ficha catastral.<br>";
+                        var mensaje4 = "Copia documento de identidad del solicitante.<br>";
+                        var mensaje5 = "Número de la matricula donde se va ha realizar la independización, reactivación o cambio de acometida.<br>"
+                        var mensaje6 = "Esta matrí­cula debe estar al día con los pagos del servicio.<br>"
+                        var mensaje7 = "Se solicita tener disponibilidad de colilla o acometida interna.";
+                        
+                        var msgs = [];
+                        msgs.push(mensaje1);
+                        msgs.push(mensaje2);
+                        msgs.push(mensaje3);
+                        msgs.push(mensaje4);
+                        msgs.push(mensaje5);
+                        msgs.push(mensaje6);
+                        msgs.push(mensaje7);
+
+                        send_mgs_fragments(msgs);
+                       
                         break;
                     default:
                 }
@@ -290,6 +336,17 @@ function bot_response(response){
 
 }
 
+
+function send_mgs_fragments(msgs){
+                         var time = 0;
+                        for (var i = 0; i < msgs.length-1; i++) {
+                            time += 1000;
+                            var my_call = window.setInterval(msg_format("Bot A&A",msgs[i],'logo.jpg'), time);
+                        };
+                        window.clearInterval(my_call);
+
+
+}
 
 function msg_format(name,msg,logo_name){
         var div = document.getElementById("main_div");
